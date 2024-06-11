@@ -1,6 +1,7 @@
 package com.kk.spring_data_jpa_tut.repository;
 
 import com.kk.spring_data_jpa_tut.entity.Course;
+import com.kk.spring_data_jpa_tut.entity.Student;
 import com.kk.spring_data_jpa_tut.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,29 @@ class CourseRepositoryTest {
                 firstPageTenRecords).getContent();
 
         System.out.println("courses: " + courses);
+    }
+
+    @Test
+    public void saveCourseWithStudentAndTeacher() {
+        Teacher teacher = Teacher.builder()
+                .firstName("mandeep")
+                .lastName("singh")
+                .build();
+
+        Student student = Student.builder()
+                .firstName("AMan")
+                .lastName("Gupta")
+                .emailId("aman@gupta.com")
+                .build();
+
+        Course course = Course.builder()
+                .title("React")
+                .credit(8)
+                .teacher(teacher)
+                .build();
+
+        course.addStudents(student);
+
+        courseRepository.save(course);
     }
 }
